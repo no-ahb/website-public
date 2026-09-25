@@ -1,5 +1,5 @@
-// Compact browser interpretation: eight held captures and an always-on delay network.
-export const PATCH = Object.freeze({ voices: 8, loopMin: 10, loopMax: 60,
+// Compact browser interpretation: eight held captures, delay and stereo reverb.
+export const PATCH = Object.freeze({ voices: 8, loopMin: 10, loopMax: 15, retireThreshold: .003,
   layers: [[.03, .1, .255, .51], [.5, 2, .34, .6375], [3, 8, .4675, .7225]] });
 const TAU = Math.PI * 2;
 const clamp = (x, a, b) => Math.max(a, Math.min(b, x));
@@ -37,10 +37,33 @@ class Delay {
   write(x) { this.data[this.pos]=x; this.pos=(this.pos+1)%this.data.length; }
   clear() { this.data.fill(0); this.pos=0; }
 }
+// Damped parallel combs followed by allpass diffusion; a compact browser room.
+// The performance patch uses JPverb instead.
+class Reverb {
+  constructor(rate, offset) {
+    this.rate=rate;
+    this.combs=[.0297,.0371,.0411,.0437].map(seconds=>({line:new Delay(Math.round((seconds+offset)*rate)),damp:0,feedback:.82}));
+    this.diffusers=[.005,.0017].map(seconds=>new Delay(Math.round(seconds*rate)));
+  }
+  setDecay(seconds) {
+    for(const c of this.combs)c.feedback=Math.min(.995,Math.pow(.001,c.line.data.length/this.rate/seconds));
+  }
+  tick(input) {
+    let sum=0;
+    for(const c of this.combs){const y=c.line.data[c.line.pos];c.damp+=.35*(y-c.damp);c.line.write(input+c.damp*c.feedback);sum+=y*.25;}
+    for(const d of this.diffusers){const y=d.data[d.pos],x=sum;sum=y-x;d.write(x+y*.5);}
+    return sum;
+  }
+  clear(){for(const c of this.combs){c.line.clear();c.damp=0;}for(const d of this.diffusers)d.clear();}
+}
 export class ViolinEngine {
   constructor(rate, random = Math.random) {
     this.rate=rate; this.random=random; this.time=0; this.voices=Array(PATCH.voices).fill(null);
     this.inputLevel=0; this.outputLevel=0;
+    this.effects={delay:true,reverb:false};this.delayMix=1;this.reverbMix=0;
+    this.parameters={delayIntensity:.65,reverbSeconds:2.5};this.delayIntensity=.65;this.reverbSeconds=2.5;
+    this.effectSlew=1-Math.exp(-1/(rate*.03));
+    this.reverbs=[new Reverb(rate,0),new Reverb(rate,.0013)];
     this.taps=PATCH.layers.flatMap((spec, layer)=>Array.from({length:2},(_,channel)=>{
       const seconds=this.exp(spec[0],spec[1]);
       return {layer,channel,seconds,samples:Math.round(seconds*rate),line:new Delay(seconds*rate),
@@ -54,7 +77,7 @@ export class ViolinEngine {
   record() {
     this.closeRecording();
     const id=this.slot(),samples=Math.round(this.exp(PATCH.loopMin,PATCH.loopMax)*this.rate);
-    this.voices[id]={seconds:samples/this.rate,samples,data:new Float32Array(samples),pos:0,captured:0,recording:true,cycles:0,energy:0,cyclePeak:0,
+    this.voices[id]={seconds:samples/this.rate,samples,data:new Float32Array(samples),pos:0,captured:0,recording:true,cycles:0,energy:0,retirePeak:0,retireFrames:0,
       peaks:new Float32Array(192),lastBin:-1,pan:0,feedback:.93+this.random()*.03,
       low:new Filter(this.rate,'low',4800),high:new Filter(this.rate,'high',120),
       panMod:this.wander(.01,.06),cutoffMod:this.wander(.02,.15),cutoff:4800};
@@ -63,17 +86,33 @@ export class ViolinEngine {
   closeRecording() {
     for(const v of this.voices)if(v?.recording){
       v.recording=false;
+      v.retirePeak=0;v.retireFrames=0;
       // Fade only already-captured samples; never admit new input after release.
       const end=Math.min(v.captured,Math.round(this.rate*.005));
       for(let i=0;i<end;i++)v.data[(v.pos-1-i+v.samples)%v.samples]*=sineFade(i/end);
     }
   }
+  setEffects({delay,reverb}) {
+    if(typeof delay==='boolean')this.effects.delay=delay;
+    if(typeof reverb==='boolean')this.effects.reverb=reverb;
+  }
+  setParameters({delayIntensity,reverbSeconds}) {
+    if(Number.isFinite(delayIntensity))this.parameters.delayIntensity=clamp(delayIntensity,0,1);
+    if(Number.isFinite(reverbSeconds))this.parameters.reverbSeconds=clamp(reverbSeconds,.5,8);
+  }
+  remove(id) {
+    if(!Number.isInteger(id)||id<0||id>=PATCH.voices)return;
+    this.voices[id]=null;
+  }
   clear() {
     this.voices.fill(null);this.inputLevel=this.outputLevel=0;
     for(const t of this.taps){t.line.clear();t.low.clear();t.high.clear();t.feedback=t.value=0;}
+    for(const reverb of this.reverbs)reverb.clear();
   }
   process(input,left,right) {
     const sr=this.rate,dt=left.length/sr;
+    this.reverbSeconds+=(this.parameters.reverbSeconds-this.reverbSeconds)*(1-Math.exp(-dt/.08));
+    for(const reverb of this.reverbs)reverb.setDecay(this.reverbSeconds);
     for(const t of this.taps){const s=PATCH.layers[t.layer];t.self=s[2]+(s[3]-s[2])*t.selfMod.next(dt);t.cross=.03+.17*t.crossMod.next(dt);}
     for(const v of this.voices)if(v){
       v.pan=Math.cos(v.panMod.next(dt)*TAU);
@@ -82,6 +121,9 @@ export class ViolinEngine {
     }
     const recording=this.voices.some(v=>v?.recording);
     for(let n=0;n<left.length;n++){
+      this.delayMix+=(Number(this.effects.delay)-this.delayMix)*this.effectSlew;
+      this.reverbMix+=(Number(this.effects.reverb)-this.reverbMix)*this.effectSlew;
+      this.delayIntensity+=(this.parameters.delayIntensity-this.delayIntensity)*this.effectSlew;
       const raw=clamp(Number.isFinite(input[n])?input[n]:0,-2,2),live=recording?raw:0;
       this.inputLevel=Math.max(Math.abs(live),this.inputLevel*.998);
       let l=0,r=0;
@@ -94,26 +136,38 @@ export class ViolinEngine {
         const bin=Math.min(191,Math.floor(v.pos/v.samples*192));
         if(bin!==v.lastBin){v.peaks[bin]=0;v.lastBin=bin;}
         v.peaks[bin]=Math.max(v.peaks[bin],Math.abs(v.recording?captured:value));
-        v.energy=Math.max(Math.abs(value),v.energy*.998);v.cyclePeak=Math.max(v.cyclePeak,Math.abs(value));
+        v.energy=Math.max(Math.abs(value),v.energy*.998);
         if(v.recording)v.captured++;
-        if(++v.pos===v.samples){v.pos=0;v.cycles++;if(v.cycles>=10&&!v.recording&&v.cyclePeak<.003)this.voices[id]=null;v.cyclePeak=0;}
+        else {
+          // Inspect a complete pass after capture closes, including its recorded
+          // phrase. Silence before a phrase's first return must not retire it.
+          v.retirePeak=Math.max(v.retirePeak,Math.abs(value));
+          if(++v.retireFrames>=v.samples){
+            if(v.retirePeak<PATCH.retireThreshold)this.voices[id]=null;
+            v.retirePeak=0;v.retireFrames=0;
+          }
+        }
+        if(++v.pos===v.samples){v.pos=0;v.cycles++;}
       }
-      const feed=live+(l+r)*.22;let dl=0,dr=0;
+      const feed=live+(l+r)*.65;let dl=0,dr=0;
       // All reads precede writes. Only partners in the same layer cross-feed.
       for(const t of this.taps)t.value=t.line.read(t.samples);
       for(let j=0;j<this.taps.length;j++){
         const t=this.taps[j],other=this.taps[j^1];
-        t.line.write(softclip(feed+t.feedback*t.self+other.feedback*t.cross));
+        t.line.write(softclip((feed+t.feedback*t.self+other.feedback*t.cross)*this.delayMix));
         if(t.channel)dr+=t.value/3;else dl+=t.value/3;
       }
       for(const t of this.taps)t.feedback=t.high.tick(t.low.tick(t.value));
-      left[n]=.8*Math.tanh((l+dl*.45)*.5);right[n]=.8*Math.tanh((r+dr*.45)*.5);
+      const delayGain=1.8*this.delayIntensity*this.delayMix;
+      const wetL=l+dl*delayGain,wetR=r+dr*delayGain;
+      const revL=this.reverbs[0].tick((wetL+live*.4)*this.reverbMix),revR=this.reverbs[1].tick((wetR+live*.4)*this.reverbMix);
+      left[n]=.8*Math.tanh((wetL+revL*.3*this.reverbMix)*.5);right[n]=.8*Math.tanh((wetR+revR*.3*this.reverbMix)*.5);
       this.outputLevel=Math.max(Math.abs(left[n]),Math.abs(right[n]),this.outputLevel*.998);
     }
     this.time+=dt;
   }
   snapshot() {
-    return {time:this.time,input:this.inputLevel,output:this.outputLevel,next:this.slot(),recordings:this.voices.flatMap((v,i)=>v?.recording?[i]:[]),
+    return {time:this.time,input:this.inputLevel,output:this.outputLevel,effects:{...this.effects},parameters:{...this.parameters},next:this.slot(),recordings:this.voices.flatMap((v,i)=>v?.recording?[i]:[]),
       voices:this.voices.map(v=>v?{seconds:v.seconds,phase:v.pos/v.samples,fill:Math.min(1,v.captured/v.samples),recording:v.recording,energy:v.energy,pan:v.pan,cycles:v.cycles,peaks:Array.from(v.peaks)}:null)};
   }
 }
