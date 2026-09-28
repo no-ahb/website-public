@@ -1,22 +1,64 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 840 560" role="img" aria-labelledby="title desc">
-<title id="title">ANTIPHON: fourteen-channel room</title>
-<desc id="desc">Fourteen discrete speakers numbered clockwise from the door, with a separate subwoofer on channel fifteen. Schematic only; positions and room proportions are illustrative.</desc>
-<rect width="840" height="560" fill="#f4f3ef"/>
-<g fill="none" stroke="#787873" stroke-width="1.5"><path d="M165 75 H755 V465 H85 V75 H115"/><path d="M115 75 V25 M115 25 A50 50 0 0 1 165 75" stroke="#aaa9a2"/></g>
-<g font-family="Arial, sans-serif" text-anchor="middle" fill="#555650"><text x="420" y="245" font-size="21" letter-spacing="3">14-CHANNEL ROOM</text><text x="420" y="275" font-size="15">Haus für Medienkunst</text><text x="140" y="510" font-size="14">Door / clockwise numbering</text><text x="675" y="510" font-size="14">Schematic · not to scale</text></g>
-<g font-family="Arial, sans-serif" text-anchor="middle" font-size="16">
-<g><rect x="183" y="101" width="44" height="38" rx="3" fill="#e4e5de" stroke="#777d6e"/><text x="205" y="126" fill="#30352e">01</text></g>
-<g><rect x="323" y="101" width="44" height="38" rx="3" fill="#e4e5de" stroke="#777d6e"/><text x="345" y="126" fill="#30352e">02</text></g>
-<g><rect x="463" y="101" width="44" height="38" rx="3" fill="#e4e5de" stroke="#777d6e"/><text x="485" y="126" fill="#30352e">03</text></g>
-<g><rect x="603" y="101" width="44" height="38" rx="3" fill="#e4e5de" stroke="#777d6e"/><text x="625" y="126" fill="#30352e">04</text></g>
-<g><rect x="678" y="196" width="44" height="38" rx="3" fill="#e4e5de" stroke="#777d6e"/><text x="700" y="221" fill="#30352e">05</text></g>
-<g><rect x="678" y="301" width="44" height="38" rx="3" fill="#e4e5de" stroke="#777d6e"/><text x="700" y="326" fill="#30352e">06</text></g>
-<g><rect x="603" y="401" width="44" height="38" rx="3" fill="#e4e5de" stroke="#777d6e"/><text x="625" y="426" fill="#30352e">07</text></g>
-<g><rect x="463" y="401" width="44" height="38" rx="3" fill="#e4e5de" stroke="#777d6e"/><text x="485" y="426" fill="#30352e">08</text></g>
-<g><rect x="323" y="401" width="44" height="38" rx="3" fill="#e4e5de" stroke="#777d6e"/><text x="345" y="426" fill="#30352e">09</text></g>
-<g><rect x="183" y="401" width="44" height="38" rx="3" fill="#e4e5de" stroke="#777d6e"/><text x="205" y="426" fill="#30352e">10</text></g>
-<g><rect x="118" y="331" width="44" height="38" rx="3" fill="#e4e5de" stroke="#777d6e"/><text x="140" y="356" fill="#30352e">11</text></g>
-<g><rect x="118" y="261" width="44" height="38" rx="3" fill="#e4e5de" stroke="#777d6e"/><text x="140" y="286" fill="#30352e">12</text></g>
-<g><rect x="118" y="191" width="44" height="38" rx="3" fill="#e4e5de" stroke="#777d6e"/><text x="140" y="216" fill="#30352e">13</text></g>
-<g><rect x="118" y="121" width="44" height="38" rx="3" fill="#e4e5de" stroke="#777d6e"/><text x="140" y="146" fill="#30352e">14</text></g>
-</g><g font-family="Arial, sans-serif" text-anchor="middle"><rect x="355" y="317" width="130" height="45" rx="3" fill="none" stroke="#8b8c86" stroke-dasharray="4 4"/><text x="420" y="345" font-size="14" fill="#555650">SUB · CH 15</text></g></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 1080" role="img" aria-labelledby="title desc">
+<title id="title">ANTIPHON — two-layer loudspeaker arrangement</title>
+<desc id="desc">Architectural schematic: a lower plan with eight Genelec speakers at seated ear height, an upper plan with six Genelec speakers near the ceiling, and a section showing the upper speakers angled down toward the room center. Positions and proportions are indicative, not measured.</desc>
+<defs>
+  <pattern id="hatch" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><path d="M0 0V7" stroke="#b4b3ac" stroke-width="1"/></pattern>
+  <marker id="arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="m1 1 6 3-6 3" fill="none" stroke="#82867f" stroke-width="1.2"/></marker>
+  <g id="monitor-plan"><path d="M-13-10 Q-15-8-15 0 Q-15 8-13 10 L10 13 Q14 13 14 9 V-9 Q14-13 10-13Z" fill="#414741" stroke="#414741" stroke-width="1.5"/><path d="M10-9V9" stroke="#f8f7f3" stroke-width="1.1"/></g>
+  <g id="monitor-section"><path d="M-12-24 Q-17-21-17-13 V13 Q-17 21-12 24 H9 Q15 23 15 16 V-16 Q15-23 9-24Z" fill="#414741"/><path d="M11-18V18" stroke="#f8f7f3" stroke-width="1.2"/></g>
+</defs>
+<rect width="1120" height="1080" fill="#f8f7f3"/>
+<g font-family="Arial, Helvetica, sans-serif" fill="#353b36">
+<text x="64" y="58" font-size="22" letter-spacing="2">ANTIPHON</text><text x="1056" y="58" font-size="17" text-anchor="end">HAUS FÜR MEDIENKUNST</text>
+<path d="M64 80H1056" stroke="#777c74" stroke-width="1"/>
+<text x="80" y="126" font-size="20">01   LOWER PLAN</text><text x="80" y="154" font-size="18" fill="#687067">8 Genelecs · seated ear height</text>
+<text x="620" y="126" font-size="20">02   UPPER PLAN</text><text x="620" y="154" font-size="18" fill="#687067">6 Genelecs · near ceiling</text>
+
+<path d="M70 190h440v330h-440Z M80 200v310h420v-310Z" fill="url(#hatch)" fill-rule="evenodd" stroke="#4c534b" stroke-width="1.4"/>
+<path d="M610 190h440v330h-440Z M620 200v310h420v-310Z" fill="url(#hatch)" fill-rule="evenodd" stroke="#4c534b" stroke-width="1.4"/>
+<use href="#monitor-plan" transform="translate(195 230) rotate(52.77)"/>
+<use href="#monitor-plan" transform="translate(385 230) rotate(127.23)"/>
+<use href="#monitor-plan" transform="translate(470 295) rotate(161.57)"/>
+<use href="#monitor-plan" transform="translate(470 415) rotate(-161.57)"/>
+<use href="#monitor-plan" transform="translate(385 480) rotate(-127.23)"/>
+<use href="#monitor-plan" transform="translate(195 480) rotate(-52.77)"/>
+<use href="#monitor-plan" transform="translate(110 415) rotate(-18.43)"/>
+<use href="#monitor-plan" transform="translate(110 295) rotate(18.43)"/>
+<path d="M735 230L809.4 327.9" stroke="#969c91" stroke-width="1" stroke-dasharray="5 5" marker-end="url(#arrow)"/>
+<use href="#monitor-plan" transform="translate(735 230) rotate(52.77)"/>
+<path d="M925 230L850.6 327.9" stroke="#969c91" stroke-width="1" stroke-dasharray="5 5" marker-end="url(#arrow)"/>
+<use href="#monitor-plan" transform="translate(925 230) rotate(127.23)"/>
+<path d="M1010 355L864.0 355.0" stroke="#969c91" stroke-width="1" stroke-dasharray="5 5" marker-end="url(#arrow)"/>
+<use href="#monitor-plan" transform="translate(1010 355) rotate(180.00)"/>
+<path d="M925 480L850.6 382.1" stroke="#969c91" stroke-width="1" stroke-dasharray="5 5" marker-end="url(#arrow)"/>
+<use href="#monitor-plan" transform="translate(925 480) rotate(-127.23)"/>
+<path d="M735 480L809.4 382.1" stroke="#969c91" stroke-width="1" stroke-dasharray="5 5" marker-end="url(#arrow)"/>
+<use href="#monitor-plan" transform="translate(735 480) rotate(-52.77)"/>
+<path d="M650 355L796.0 355.0" stroke="#969c91" stroke-width="1" stroke-dasharray="5 5" marker-end="url(#arrow)"/>
+<use href="#monitor-plan" transform="translate(650 355) rotate(0.00)"/>
+<g fill="none" stroke="#adb0a7" stroke-width="1"><path d="M54 355H526" stroke-dasharray="14 5 3 5"/><path d="M290 338V372M273 355H307M818 355H842M830 343V367"/><circle cx="830" cy="355" r="22"/></g>
+<text x="54" y="343" font-size="16" text-anchor="middle">A</text><text x="526" y="343" font-size="16" text-anchor="middle">A</text>
+<text x="290" y="550" text-anchor="middle" font-size="17" fill="#687067">Horizontal listening layer</text><text x="830" y="550" text-anchor="middle" font-size="17" fill="#687067">Aimed toward the room center</text>
+<path d="M64 586H1056" stroke="#c4c7be" stroke-width="1"/>
+<text x="80" y="630" font-size="20">03   SECTION A–A</text>
+<text x="1040" y="630" text-anchor="end" font-size="17" fill="#687067">Layer heights and aiming</text>
+<!-- Section is a representative slice, not an additional set of speakers. -->
+<path d="M140 685H980V935H140Z M150 695V925H970V695Z" fill="url(#hatch)" fill-rule="evenodd" stroke="#4c534b" stroke-width="1.5"/>
+<path d="M150 720H184M936 720H970M150 845H183M937 845H970" fill="none" stroke="#4c534b" stroke-width="2"/>
+<use href="#monitor-section" transform="translate(198 721) rotate(25)"/>
+<use href="#monitor-section" transform="translate(922 721) rotate(155)"/>
+<path d="M222 732 503 840M898 732 617 840" fill="none" stroke="#82867f" stroke-width="1.4" stroke-dasharray="7 5" marker-end="url(#arrow)"/>
+<use href="#monitor-section" transform="translate(198 845)"/>
+<use href="#monitor-section" transform="translate(922 845) rotate(180)"/>
+<path d="M221 845H527M593 845H899" stroke="#92998d" stroke-width="1" stroke-dasharray="12 4 2 4"/>
+<text x="560" y="736" text-anchor="middle" font-size="19">6 upper speakers</text>
+<text x="560" y="762" text-anchor="middle" font-size="17" fill="#687067">Angled down toward the center</text>
+<text x="322" y="831" text-anchor="middle" font-size="17" fill="#687067">Seated ear level</text>
+<text x="793" y="878" text-anchor="middle" font-size="19">8 lower speakers</text>
+<!-- Seated listener establishes the lower acoustic plane without an invented height. -->
+<g fill="none" stroke="#6c756b" stroke-linecap="round" stroke-linejoin="round"><circle cx="560" cy="841" r="11" stroke-width="1.6"/><path d="M555 855 551 884 581 888 588 916H603M558 863 578 879H594" stroke-width="2.3"/><path d="M539 864V895H580M544 895V925M576 895V925" stroke-width="1.3"/></g>
+<path d="M120 937H1000" stroke="#4c534b" stroke-width="1.5"/>
+<text x="560" y="969" text-anchor="middle" font-size="17" fill="#687067">Representative section through the two listening layers</text>
+<path d="M64 1001H1056" stroke="#777c74" stroke-width="1"/>
+<text x="64" y="1038" font-size="17">14 CHANNELS   /   8 LOWER + 6 UPPER</text><text x="1056" y="1038" text-anchor="end" font-size="16" fill="#687067">Positions indicative · not to scale</text>
+</g></svg>
