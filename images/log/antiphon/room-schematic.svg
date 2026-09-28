@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 840 560" role="img" aria-labelledby="title desc">
+<title id="title">ANTIPHON: fourteen-channel room</title>
+<desc id="desc">Fourteen discrete speakers numbered clockwise from the door, with a separate subwoofer on channel fifteen. Schematic only; positions and room proportions are illustrative.</desc>
+<rect width="840" height="560" fill="#f4f3ef"/>
+<g fill="none" stroke="#787873" stroke-width="1.5"><path d="M165 75 H755 V465 H85 V75 H115"/><path d="M115 75 V25 M115 25 A50 50 0 0 1 165 75" stroke="#aaa9a2"/></g>
+<g font-family="Arial, sans-serif" text-anchor="middle" fill="#555650"><text x="420" y="245" font-size="21" letter-spacing="3">14-CHANNEL ROOM</text><text x="420" y="275" font-size="15">Haus für Medienkunst</text><text x="140" y="510" font-size="14">Door / clockwise numbering</text><text x="675" y="510" font-size="14">Schematic · not to scale</text></g>
+<g font-family="Arial, sans-serif" text-anchor="middle" font-size="16">
+<g><rect x="183" y="101" width="44" height="38" rx="3" fill="#e4e5de" stroke="#777d6e"/><text x="205" y="126" fill="#30352e">01</text></g>
+<g><rect x="323" y="101" width="44" height="38" rx="3" fill="#e4e5de" stroke="#777d6e"/><text x="345" y="126" fill="#30352e">02</text></g>
+<g><rect x="463" y="101" width="44" height="38" rx="3" fill="#e4e5de" stroke="#777d6e"/><text x="485" y="126" fill="#30352e">03</text></g>
+<g><rect x="603" y="101" width="44" height="38" rx="3" fill="#e4e5de" stroke="#777d6e"/><text x="625" y="126" fill="#30352e">04</text></g>
+<g><rect x="678" y="196" width="44" height="38" rx="3" fill="#e4e5de" stroke="#777d6e"/><text x="700" y="221" fill="#30352e">05</text></g>
+<g><rect x="678" y="301" width="44" height="38" rx="3" fill="#e4e5de" stroke="#777d6e"/><text x="700" y="326" fill="#30352e">06</text></g>
+<g><rect x="603" y="401" width="44" height="38" rx="3" fill="#e4e5de" stroke="#777d6e"/><text x="625" y="426" fill="#30352e">07</text></g>
+<g><rect x="463" y="401" width="44" height="38" rx="3" fill="#e4e5de" stroke="#777d6e"/><text x="485" y="426" fill="#30352e">08</text></g>
+<g><rect x="323" y="401" width="44" height="38" rx="3" fill="#e4e5de" stroke="#777d6e"/><text x="345" y="426" fill="#30352e">09</text></g>
+<g><rect x="183" y="401" width="44" height="38" rx="3" fill="#e4e5de" stroke="#777d6e"/><text x="205" y="426" fill="#30352e">10</text></g>
+<g><rect x="118" y="331" width="44" height="38" rx="3" fill="#e4e5de" stroke="#777d6e"/><text x="140" y="356" fill="#30352e">11</text></g>
+<g><rect x="118" y="261" width="44" height="38" rx="3" fill="#e4e5de" stroke="#777d6e"/><text x="140" y="286" fill="#30352e">12</text></g>
+<g><rect x="118" y="191" width="44" height="38" rx="3" fill="#e4e5de" stroke="#777d6e"/><text x="140" y="216" fill="#30352e">13</text></g>
+<g><rect x="118" y="121" width="44" height="38" rx="3" fill="#e4e5de" stroke="#777d6e"/><text x="140" y="146" fill="#30352e">14</text></g>
+</g><g font-family="Arial, sans-serif" text-anchor="middle"><rect x="355" y="317" width="130" height="45" rx="3" fill="none" stroke="#8b8c86" stroke-dasharray="4 4"/><text x="420" y="345" font-size="14" fill="#555650">SUB · CH 15</text></g></svg>
