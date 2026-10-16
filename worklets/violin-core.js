@@ -1,5 +1,5 @@
 // Compact browser interpretation: eight held captures, delay and stereo reverb.
-export const PATCH = Object.freeze({ voices: 8, loopMin: 10, loopMax: 15, retireThreshold: .003,
+export const PATCH = Object.freeze({ voices: 8, loopMin: 10, loopMax: 60, retireThreshold: .003,
   layers: [[.03, .1, .255, .51], [.5, 2, .34, .6375], [3, 8, .4675, .7225]] });
 const TAU = Math.PI * 2;
 const clamp = (x, a, b) => Math.max(a, Math.min(b, x));

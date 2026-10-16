@@ -1,0 +1,1 @@
+import{_ as d}from"./preload-helper.BlTxHScW.js";const e=()=>{document.querySelector('process-evidence[data-kind="audium"], process-evidence[data-kind="paper-speakers"]')&&d(()=>import("./interactions.BPcGQIXK.js"),[])};e();document.addEventListener("astro:page-load",e);
