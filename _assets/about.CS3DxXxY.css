@@ -16,6 +16,7 @@
 
 .about-content[data-astro-cid-w3eae6dn] {
   min-width: 0;
+  padding-top: var(--about-introduction-offset, calc(clamp(28px,3vw,36px) * 1.25 + 24px));
 }
 
 .about-location[data-astro-cid-w3eae6dn] {
@@ -204,6 +205,10 @@ html body.portfolio .about-cv-section[data-astro-cid-w3eae6dn] {
   .about-heading[data-astro-cid-w3eae6dn] {
     position: static;
     padding-left: 52px;
+  }
+
+  .about-content[data-astro-cid-w3eae6dn] {
+    padding-top: 0;
   }
 
   .about-heading[data-astro-cid-w3eae6dn] h1[data-astro-cid-w3eae6dn] {
