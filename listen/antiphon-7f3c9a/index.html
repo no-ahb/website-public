@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow,noarchive"><meta name="referrer" content="no-referrer"><meta name="theme-color" content="#ffffff">
+<title>Antiphon</title>
+<style>
+@font-face{font-family:Diatype;src:local('ABC Diatype'),local('ABCDiatype-Regular'),url('diatype.otf') format('opentype');font-weight:400;font-display:swap}
+*{box-sizing:border-box}body{margin:0;background:#fff;color:#222;font-family:Diatype,Arial,sans-serif;font-size:14px;-webkit-font-smoothing:antialiased}main{width:min(100% - 48px,540px);min-height:100svh;margin:auto;display:flex;flex-direction:column;justify-content:center;padding:40px 0 max(24px,env(safe-area-inset-bottom))}h1{font:inherit;font-size:20px;font-weight:400;letter-spacing:-.5px;margin:0 0 20px}.turntable{width:100%;margin:8px 0 32px}.turntable svg{display:block;width:100%;overflow:visible;stroke:#333;stroke-width:1;fill:#fff;stroke-linejoin:round;stroke-linecap:round}.record{transform-origin:155px 160px;animation:spin 12s linear infinite;animation-play-state:paused}.playing .record{animation-play-state:running}.flip-shell{transform-origin:155px 160px;transition:transform .65s}.flip-shell.flipping{transform:rotateY(180deg)}.tonearm{transform-origin:305px 70px;transition:transform .6s}.playing .tonearm{transform:rotate(17deg)}.controls{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;gap:18px}h2{font:inherit;margin:0}.buttons{display:flex;gap:24px}button{font:inherit;appearance:none;background:none;color:inherit;border:0;padding:12px 0;min-height:44px;cursor:pointer;touch-action:manipulation}button:hover{text-decoration:underline;text-underline-offset:4px}button:focus-visible,input:focus-visible{outline:1px solid #222;outline-offset:6px}.seek{display:block;width:100%;height:24px;margin:0;appearance:none;background:transparent;cursor:pointer}.seek::-webkit-slider-runnable-track{height:1px;background:#ccc}.seek::-moz-range-track{height:1px;background:#ccc}.seek::-webkit-slider-thumb{appearance:none;width:2px;height:13px;background:#222;margin-top:-6px;border-radius:0}.seek::-moz-range-thumb{width:2px;height:13px;background:#222;border:0;border-radius:0}.times{display:flex;justify-content:space-between;font-size:12px;color:#777;font-variant-numeric:tabular-nums;margin-top:4px}.status{font-size:12px;color:#777;min-height:18px;margin:18px 0 0}.enhanced audio{display:none}audio{width:100%}@keyframes spin{to{transform:rotate(360deg)}}@media(prefers-reduced-motion:reduce){.record{animation:none}.flip-shell,.tonearm{transition:none}}@media(max-width:480px){main{width:calc(100% - 40px)}h1{font-size:18px}.turntable{margin:20px 0 32px}}
+</style></head><body><main>
+<h1>Antiphon</h1>
+<div class="turntable" aria-hidden="true">
+<svg viewBox="0 0 610 350" xmlns="http://www.w3.org/2000/svg">
+<path d="M48 202 388 287 580 95 580 121 388 313 48 228Z"/><path d="M48 202 388 287 388 313M388 287 580 95" fill="none"/>
+<path d="M80 236v12l28 7 10-10M360 306v12l22 6 14-14M548 154v10l-17 17v-10" fill="none"/>
+<g transform="matrix(1 .25 -.6 .6 240 10)">
+<path d="M0 0H340V320H0Z"/>
+<circle cx="155" cy="160" r="134"/><circle cx="155" cy="160" r="129"/>
+<g class="flip-shell"><g class="record">
+<circle cx="155" cy="160" r="124"/>
+<g fill="none" stroke="#aaa" stroke-width=".65"><circle cx="155" cy="160" r="113"/><circle cx="155" cy="160" r="107"/><circle cx="155" cy="160" r="101"/><circle cx="155" cy="160" r="95"/><circle cx="155" cy="160" r="89"/><circle cx="155" cy="160" r="83"/><circle cx="155" cy="160" r="77"/><circle cx="155" cy="160" r="71"/><circle cx="155" cy="160" r="65"/><circle cx="155" cy="160" r="59"/></g>
+<circle cx="155" cy="160" r="40"/><path d="M155 126v8M155 186v8"/>
+</g></g><circle cx="155" cy="160" r="3"/>
+<g class="tonearm"><rect x="294" y="45" width="22" height="30"/><circle cx="305" cy="70" r="13"/><path d="M301 72v153l-23 27 6 5 25-29V72Z"/><path d="m277 247-14 19 11 7 14-19Z"/></g>
+<rect x="19" y="282" width="28" height="14"/><path d="M299 278h22m-11-8v16" fill="none"/>
+</g></svg></div>
+<div id="custom-controls" hidden><div class="controls"><h2 id="side-title">Side A</h2><span id="letter" hidden>A</span><div class="buttons"><button id="play" type="button" aria-label="Play Side A">Play</button><button id="flip" type="button" aria-label="Flip record to Side B">Flip</button></div></div>
+<input class="seek" id="seek" type="range" min="0" max="100" value="0" step="0.1" aria-label="Playback position"><div class="times"><span id="elapsed">0:00</span><span id="duration">—:—</span></div></div>
+<audio id="audio" controls preload="metadata" src="side-a.mp3"></audio>
+<p id="status" class="status" role="status" aria-live="polite"></p>
+<noscript><p><a href="side-a.mp3">Side A</a> / <a href="side-b.mp3">Side B</a></p></noscript>
+</main><script>
+const audio=document.querySelector('#audio'),play=document.querySelector('#play'),flip=document.querySelector('#flip'),seek=document.querySelector('#seek'),status=document.querySelector('#status');
+let side=0,positions=[0,0],pendingPosition=null;
+const sideName=()=>side===0?'A':'B';
+const time=s=>Number.isFinite(s)?`${Math.floor(s/60)}:${String(Math.floor(s%60)).padStart(2,'0')}`:'—:—';
+function position(){if('mediaSession' in navigator && 'setPositionState' in navigator.mediaSession && Number.isFinite(audio.duration)&&audio.duration>0){try{navigator.mediaSession.setPositionState({duration:audio.duration,playbackRate:audio.playbackRate,position:Math.min(audio.currentTime,audio.duration)});}catch{}}}
+function render(){document.querySelector('#elapsed').textContent=time(audio.currentTime);document.querySelector('#duration').textContent=time(audio.duration);seek.max=Number.isFinite(audio.duration)?audio.duration:100;seek.value=audio.currentTime;seek.disabled=!Number.isFinite(audio.duration);seek.setAttribute('aria-valuetext',`${time(audio.currentTime)} of ${time(audio.duration)}`);position();}
+function state(){const active=!audio.paused&&!audio.ended;document.body.classList.toggle('playing',active);play.textContent=active?'Pause':'Play';play.setAttribute('aria-label',`${active?'Pause':'Play'} Side ${sideName()}`);if('mediaSession'in navigator)navigator.mediaSession.playbackState=active?'playing':'paused';}
+function metadata(){if('mediaSession'in navigator && 'MediaMetadata'in window)navigator.mediaSession.metadata=new MediaMetadata({title:`Antiphon — Side ${sideName()}`,album:'Antiphon'});}
+async function start(){status.textContent='';try{await audio.play();}catch(error){if(error.name!=='AbortError')status.textContent='Playback paused. Press play to continue.';}state();}
+function changeSide(){positions[side]=audio.ended?0:audio.currentTime;const resume=!audio.paused&&!audio.ended;audio.pause();side=1-side;pendingPosition=positions[side];audio.src=`side-${sideName().toLowerCase()}.mp3`;audio.load();document.querySelector('#side-title').textContent=`Side ${sideName()}`;document.querySelector('#letter').textContent=sideName();flip.textContent='Flip';flip.setAttribute('aria-label',`Flip record to Side ${side===0?'B':'A'}`);const shell=document.querySelector('.flip-shell');shell.classList.toggle('flipping',side===1);metadata();render();state();status.textContent='';if(resume)start();}
+function jump(amount){if(Number.isFinite(audio.duration))audio.currentTime=Math.max(0,Math.min(audio.duration,audio.currentTime+amount));render();}
+play.addEventListener('click',()=>audio.paused?start():audio.pause());flip.addEventListener('click',changeSide);seek.addEventListener('input',()=>{if(Number.isFinite(audio.duration)){audio.currentTime=Number(seek.value);render();}});
+audio.addEventListener('loadedmetadata',()=>{if(pendingPosition!==null){audio.currentTime=Math.min(pendingPosition,audio.duration);pendingPosition=null;}render();});audio.addEventListener('timeupdate',render);audio.addEventListener('durationchange',render);audio.addEventListener('play',state);audio.addEventListener('pause',state);audio.addEventListener('playing',()=>{status.textContent='';state();});audio.addEventListener('waiting',()=>{status.textContent='Loading audio…';});audio.addEventListener('error',()=>{status.textContent='Audio could not load. Check your connection and press play to retry.';state();});audio.addEventListener('ended',()=>{state();status.textContent=`End of Side ${sideName()}. Flip the record to listen to Side ${side===0?'B':'A'}.`;});
+if('audioSession'in navigator){try{navigator.audioSession.type='playback';}catch{}}
+if('mediaSession'in navigator){const actions={play:start,pause:()=>audio.pause(),seekbackward:e=>jump(-(e.seekOffset||15)),seekforward:e=>jump(e.seekOffset||15),seekto:e=>{if(Number.isFinite(audio.duration)&&Number.isFinite(e.seekTime)){audio.currentTime=Math.max(0,Math.min(audio.duration,e.seekTime));render();}},previoustrack:changeSide,nexttrack:changeSide};for(const [name,handler] of Object.entries(actions)){try{navigator.mediaSession.setActionHandler(name,handler);}catch{}}}
+metadata();render();state();document.querySelector('#custom-controls').hidden=false;document.body.classList.add('enhanced');
+</script></body></html>
