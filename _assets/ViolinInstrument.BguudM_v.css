@@ -174,7 +174,7 @@ html body.portfolio .log-detail .log-detail-body .antiphon-map-images>figure { w
 html body.portfolio .log-detail .log-detail-body .antiphon-map-images figure img { display:block; width:100%; height:auto; aspect-ratio:1; object-fit:contain; background:#0a0a0f; }
 /* The explorer views share one footprint and dissolve without moving the page. */
 html body.portfolio .log-detail-body .antiphon-crossfade { display:grid; grid-template-columns:minmax(0,1fr); max-width:760px; margin:36px auto; position:relative; }
-html body.portfolio .log-detail .log-detail-body .antiphon-crossfade>figure { grid-area:1/1; width:100%; max-width:none; min-width:0; margin:0; opacity:0; pointer-events:none; transition:opacity 800ms ease-in-out; }
+html body.portfolio .log-detail .log-detail-body .antiphon-crossfade>figure { grid-area:1/1; width:100%; max-width:none; min-width:0; margin:0; opacity:0; pointer-events:none; transition:opacity 500ms ease-in-out; }
 html body.portfolio .log-detail .log-detail-body .antiphon-crossfade>figure:first-of-type,
 html body.portfolio .log-detail .log-detail-body .antiphon-crossfade[data-ready]>figure[data-active=true] { opacity:1; pointer-events:auto; }
 html body.portfolio .log-detail .log-detail-body .antiphon-crossfade[data-ready]>figure[data-active=false] { opacity:0; pointer-events:none; }
@@ -370,7 +370,7 @@ sea-process button:focus-visible,sea-plate-designer :is(button,input,select):foc
 @media(max-width:760px){.sea-recording-label{display:block;font-size:.65rem;max-width:none}.sea-controls{gap:12px}}
 /* Plain line drawings; the surrounding copy carries the technical detail. */
 sea-process { border:0; border-block:1px solid #26292338; border-radius:0; background:none; padding:20px 0; color:#20221f; }
-.portfolio .sea-processing-steps { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:0 36px; max-width:1040px; margin:24px auto; padding:22px; box-sizing:border-box; border:1px solid #cecdc4; border-radius:0; background:rgba(255,255,255,.16); }
+.portfolio .sea-processing-steps { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:0 36px; width:min(100%,var(--study-measure)); max-width:var(--study-measure); margin:24px auto; padding:0; box-sizing:border-box; border:0; background:none; }
 sea-plate-designer { border-radius:0; }
 .portfolio .sea-processing-steps>.sea-location-label { grid-column:1/-1; margin:0; }
 .portfolio .sea-processing-steps>section { position:relative; display:flex; flex-direction:column; gap:0; min-width:0; margin:0; padding:10px 0; }
@@ -413,7 +413,7 @@ sea-frame-assembly { padding:0; border:0; border-radius:0; background:transparen
 .sea-assembly-view { height:clamp(400px,55vw,670px); }
 .sea-assembly-controls { justify-content:center; margin-top:0; }
 @media(max-width:900px){.sea-designer-controls{grid-template-columns:repeat(2,1fr)}.sea-designer-controls .sea-diagram-note{grid-column:1/-1}}
-@media(max-width:600px){sea-process{padding:16px 0}.portfolio .sea-processing-steps{grid-template-columns:1fr;gap:0;padding:15px}.portfolio .sea-processing-steps>section:nth-of-type(n+2)::before{content:"";position:absolute;top:0;left:0;right:0;border-top:1px solid #26292338}.portfolio .sea-processing-steps sea-process{margin-top:0}.sea-designer-controls{grid-template-columns:1fr}.sea-card-top{font-size:.72rem}.sea-assembly-view{height:440px}}
+@media(max-width:600px){sea-process{padding:16px 0}.portfolio .sea-processing-steps{grid-template-columns:1fr;gap:0}.portfolio .sea-processing-steps>section:nth-of-type(n+2)::before{content:"";position:absolute;top:0;left:0;right:0;border-top:1px solid #26292338}.portfolio .sea-processing-steps sea-process{margin-top:0}.sea-designer-controls{grid-template-columns:1fr}.sea-card-top{font-size:.72rem}.sea-assembly-view{height:440px}}
 
 /* A shared, text-adjacent grid for every North Sea image group. */
 .portfolio .log-study-north-sea {
