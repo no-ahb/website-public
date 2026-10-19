@@ -1,0 +1,1 @@
+import{t as e}from"./preload-helper.DHhhL8Zf.js";var t=()=>{document.querySelector(`learned-mix, gesture-study, archive-views`)&&e(()=>import(`./interactions.BiYI1LX5.js`),[])};t(),document.addEventListener(`astro:page-load`,t);

@@ -1,0 +1,2 @@
+const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["_assets/presentations.sYQKlGT8.js","_assets/audio-manager.D7vEUqgU.js","_assets/portfolio-audio.DM8fDRNt.js"])))=>i.map(i=>d[i]);
+import{t as e}from"./preload-helper.DHhhL8Zf.js";function t(){document.querySelector(`practice-demo`)&&e(()=>import(`./presentations.sYQKlGT8.js`),__vite__mapDeps([0,1,2]))}t(),document.addEventListener(`astro:page-load`,t);

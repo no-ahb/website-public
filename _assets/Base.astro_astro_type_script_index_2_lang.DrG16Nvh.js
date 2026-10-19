@@ -1,0 +1,1 @@
+document.addEventListener(`click`,e=>{let t=e.target?.closest?.(`a`);if(!t)return;let n=t.getAttribute(`href`)||``;if(!n)return;let r=window.umami;if(r?.track){if(n.startsWith(`mailto:`))r.track(`mailto-click`);else if(/^https?:\/\//i.test(n))try{new URL(n).hostname!==location.hostname&&r.track(`outbound-link`,{url:n.slice(0,200)})}catch{}}},{capture:!0});

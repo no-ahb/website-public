@@ -1,0 +1,1 @@
+document.addEventListener(`astro:page-load`,()=>{document.querySelectorAll(`.log-detail-body a[href^="http"]`).forEach(e=>{e.hostname!==location.hostname&&(e.target=`_blank`,e.rel=`noopener noreferrer`)})});
